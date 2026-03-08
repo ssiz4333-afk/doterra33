@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+}
+
+model Consultation {
+  id         String             @id @default(cuid())
+  name       String
+  phone      String
+  interest   String?
+  message    String?
+  status     ConsultationStatus @default(PENDING)
+  adminNote  String?
+  utmSource  String?
+  utmMedium  String?
+  utmCampaign String?
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+}
+
+enum ConsultationStatus {
+  PENDING
+  CONTACTED
+  COMPLETED
+  CANCELLED
+}
